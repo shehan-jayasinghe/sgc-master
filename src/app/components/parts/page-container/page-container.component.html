@@ -1,0 +1,34 @@
+<div class="backdrop-cover" *ngIf="sidenav.opened" (click)="sidenav.close()"></div>
+<mat-sidenav-container>
+    <main id="main-scroll" (scroll)="updateScroll($event)">
+        <div class="main-content">
+            <div *ngIf="showBanner" class="banner-notification">The beta release of the MGRB data containing 2845 samples has now been uploaded. Please treat data with caution.</div>
+            <ng-content></ng-content>
+        </div>
+        <app-privacy-footer *ngIf="showPrivacy"></app-privacy-footer>
+    </main>
+</mat-sidenav-container>
+
+<mat-sidenav #sidenav (click)="sidenav.close()">
+    <div class="title">
+        {{ smallTitle }}
+    </div>
+    <app-side-nav></app-side-nav>
+</mat-sidenav>
+
+<header class="header">
+    <div class="header-content">
+                <span id="header-title">
+                    <div class="menu-title" *ngIf="!sidenav.opened && showTitle"
+                         routerLink="/initiatives">
+                            <div class="logo-small">
+                                <img src="assets/logos/sgc/SGC_logo_rev_x-large.png">
+                            </div>
+                            <div class="title">{{ title }}</div>
+                    </div>
+                </span>
+        <i *ngIf="showHamburger" class="material-icons"
+           (click)="sidenav.open()">menu</i>
+        <app-header-nav *ngIf="!showHamburger"></app-header-nav>
+    </div>
+</header>

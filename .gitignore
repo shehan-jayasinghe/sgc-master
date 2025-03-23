@@ -1,0 +1,17 @@
+
+!.gitkeep
+.DS_Store
+.idea
+
+dist
+dist.tar.gz
+node_modules
+coverage
+.sass-cache
+connect.lock
+coverage/*
+npm-debug.log
+**/*.log
+
+
+.vscode

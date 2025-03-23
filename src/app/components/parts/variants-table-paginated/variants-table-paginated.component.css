@@ -1,0 +1,32 @@
+:host /deep/ .ngx-datatable .datatable-body-cell {
+    -webkit-user-select: initial !important;
+    -moz-user-select: initial !important;
+    -ms-user-select: initial !important;
+    -o-user-select: initial !important;
+    user-select: initial !important;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.varsome-link {
+    margin-right: 1rem;
+}
+
+h4 {
+    text-align: center;
+    color: rgba(0, 60, 105, 0.5);
+    font-weight: bold;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toolbar .material-icons {
+    cursor: pointer;
+}

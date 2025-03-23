@@ -1,0 +1,26 @@
+<div class="search-input">
+    <form #beaconForm="ngForm" autocomplete="off">
+        <input #searchBox
+               id="search-query"
+               name="search-query" type="search"
+               [placeholder]="placeholder"
+               [ngModel]="searchBarService.query"
+               (ngModelChange)="searchAutocomplete($event)"
+               (keydown)="onKeyDown($event, searchBox)"
+               (blur)="onBlur()"
+               (focus)="onFocused(searchBox.value)">
+        <button color="accent" mat-mini-fab (click)="action(searchBox.value)"><mat-icon>search</mat-icon></button>
+    </form>
+    <div *ngIf="autocompleteResults.length > 0 && !loading && !regError" class="search-results">
+        <div *ngFor="let result of autocompleteResults; let i = index;"
+             [ngClass]="{'even': (i % 2), 'selected': i === selectedIndex}"
+             (mousedown)="$event.stopImmediatePropagation(); search($event, searchBox, result)"
+             (mouseover)="highlightAutocompleteResult(i)"
+             class="gene-search-result">
+            <span *ngIf="!options.mobile" class="result-type">{{ result.categoryName() }}:</span>
+            <span class="symbol">{{ result.displayName() }}</span>
+            <span *ngIf="!options.mobile" class="description">{{ searchBarService.displayDescription(result.description) }}</span>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,35 @@
+.search-result-content {
+    margin-top: 1rem;
+}
+
+.location.beacon {
+    display: initial;
+}
+
+.location i {
+    font-size: 16px;
+    cursor: pointer;
+    float: right;
+}
+
+.options, .task-bar {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.options * {
+    margin-left: 1rem;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.varsome-link {
+    float: right;
+}
+
+@media (min-width: 0px) and (max-width: 800px) {
+
+    .location {
+        height: 40px;
+    }
+}

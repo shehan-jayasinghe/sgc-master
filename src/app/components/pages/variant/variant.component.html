@@ -1,0 +1,148 @@
+<app-page-container [showBanner]="true">
+    <section>
+        <div class="message message-error" *ngIf="error">{{ error }}</div>
+        <div class="loading-message" *ngIf="loading && !error">
+            <mat-spinner color="primary"></mat-spinner>
+        </div>
+        <div *ngIf="variant" class="details">
+            <div class="title">
+                Variant {{ displayName(variant) }}
+            </div>
+            <div class="group">
+
+                <div class="subgroup">
+                    <div class="detail-type">Reference Information (GRCh37)</div>
+                    <div class="sibling">
+                        <div class="subgroup">
+                            <div class="detail">
+                                <div class="detail-label">
+                                    <span>Cohorts:</span>
+                                </div>
+                                <div class="detail-value">
+                                    <span>MGRB</span>
+                                </div>
+                            </div>
+                            <div class="detail">
+                                <div class="detail-label">
+                                    <span>Chromosome:</span>
+                                </div>
+                                <div class="detail-value">
+                                    <span>{{ variant.chr }}</span>
+                                </div>
+                            </div>
+
+                            <div class="detail">
+                                <div class="detail-label">
+                                    <span>Start:</span>
+                                </div>
+                                <div class="detail-value">
+                                    <span>{{ variant.start }}</span>
+                                </div>
+                            </div>
+
+                            <div class="detail">
+                                <div class="detail-label">
+                                    <span>Reference:</span>
+                                </div>
+                                <div class="detail-value">
+                                    <span>{{ variant.ref }}</span>
+                                </div>
+                            </div>
+
+                            <div class="detail">
+                                <div class="detail-label">
+                                    <span>Alternate:</span>
+                                </div>
+                                <div class="detail-value">
+                                    <span>{{ variant.alt }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subgroup">
+                            <div class="detail">
+                                <div class="detail-label">
+                                    <span>Type:</span>
+                                </div>
+                                <div class="detail-value">
+                                    <span>{{ variant.type }}</span>
+                                </div>
+                            </div>
+
+                            <div class="detail">
+                                <div class="detail-label">
+                                    <span>Frequency:</span>
+                                </div>
+                                <div class="detail-value">
+                                    <span *ngIf="variant.af">{{ variant.af.toExponential(4) }}</span>
+                                </div>
+                            </div>
+
+                            <div class="detail">
+                                <div class="detail-label">
+                                    <span>Gene:</span>
+                                </div>
+                                <div class="detail-value" *ngIf="gene">
+                                    <a id="gene_en_id" target="_blank"
+                                       href="http://grch37.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ gene.id }}">
+                                        {{ gene.symbol }}<i class="fa fa-external-link" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="detail">
+                                <div class="detail-label">
+                                    <span>dbSNP:</span>
+                                </div>
+                                <div class="detail-value" *ngIf="variant.rsid">
+                        <span><a target="_blank" href="{{ dbSnpUrl(variant) }}">
+                            {{ variant.rsid }}
+                            <i class="fa fa-external-link" aria-hidden="true"></i>
+                        </a></span>
+                                </div>
+                                <div class="detail-value" *ngIf="!variant.rsid">
+                                    <span>Not found</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="detail-type">Beacon Results</div>
+            <div class="group">
+                <div class="subgroup">
+                    <div class="beacon">
+                        <div *ngIf="!beaconSupported">Not supported (SNP only)</div>
+                        <div class="loading-message" *ngIf="beaconSupported && !beacons.totalCount() && !beaconError">
+                            <mat-spinner color="primary"></mat-spinner>
+                        </div>
+                        <div class="message message-error" *ngIf="beaconError">{{ beaconError }}</div>
+                        <div class="card" *ngIf="beaconSupported && beacons.totalCount() && !beaconError">
+                            <div class="card-row" (click)="toggleBeacon()">
+                                <div>
+                                    <span class="highlight-number">{{ beacons.foundCount() }}</span>
+                                    <span> out of </span>
+                                    <span class="highlight-number">{{ beacons.totalCount() }}</span>
+                                    <span>beacons</span>
+
+                                </div>
+                                <mat-icon *ngIf="!showBeacon">keyboard_arrow_down</mat-icon>
+                                <mat-icon *ngIf="showBeacon">keyboard_arrow_up</mat-icon>
+                            </div>
+                            <mat-progress-bar [mode]="'determinate'"
+                                             [value]="beacons.percentComplete()"></mat-progress-bar>
+
+                            <app-beacon-table *ngIf="showBeacon && beacons" [beacons]="beacons" [minimal]="true"
+                                              [limit]="10"></app-beacon-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</app-page-container>
+
+
+

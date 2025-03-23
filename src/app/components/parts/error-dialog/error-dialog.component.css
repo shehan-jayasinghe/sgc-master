@@ -1,0 +1,16 @@
+div {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+div p {
+    text-align: center;
+    margin: 0;
+}
+
+div mat-icon {
+    margin: 1rem;
+    color: #a94442;
+}

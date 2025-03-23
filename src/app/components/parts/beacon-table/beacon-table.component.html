@@ -1,0 +1,57 @@
+<div class="search-result-content" *ngIf="beacons">
+    <div class="results" *ngIf="responses.length > 0">
+        <div class="table-container">
+            <ngx-datatable class="material"
+                           [rows]="responses"
+                           [limit]="limit"
+                           [rowHeight]="30"
+                           [headerHeight]="50"
+                           [footerHeight]="50"
+                           [columnMode]="'flex'"
+                            >
+
+                <ngx-datatable-column name="Name"
+                                      [prop]="'result.beacon.name'"
+                                      [flexGrow]="3">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <div *ngIf="row.result">
+                            <span class="selectable">{{value}}</span>
+                        </div>
+                        <div *ngIf="!row.result">
+                            <span class="selectable">{{row.id}}</span>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Organization"
+                                      [prop]="'result.beacon.organization'"
+                                      [flexGrow]="3">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <div class="selectable">
+                            <a target="_blank" *ngIf="row.orgUrl" [href]="row.orgUrl">
+                                {{ row.result.beacon.organization }}
+                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                            </a>
+                            <span *ngIf="!row.orgUrl && row.result">
+                                {{ row.result.beacon.organization }}
+                            </span>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column *ngIf="!minimal" name="Response"
+                                      [prop]="'displayResult'"
+                                      [flexGrow]="1">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <div class="selectable">
+                             <div *ngIf="row.result" [ngClass]="{'message-success': row.result.response, 'message-warning': !row.result.response}">
+                                <span>{{ value | uppercase }}</span>
+                             </div>
+                            <div *ngIf="row.error" class="message-error">
+                                <span>FAILED</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</div>

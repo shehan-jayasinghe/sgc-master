@@ -1,0 +1,71 @@
+.terms-link {
+    display: inline-flex;
+    align-items: center;
+    margin-right: -9px;
+}
+
+.user {
+    width: 153px;
+}
+
+.terms {
+    width: 103px;
+}
+
+.dropdown {
+    position: absolute;
+    right: 0;
+    padding: 30px 50px 30px 0;
+    background-color: #336F9C;
+    margin-top: 23px;
+    z-index: 10;
+}
+
+.right-side {
+    display: flex;
+    align-items: center;
+}
+
+.sign-up {
+    display: inline;
+    color: white;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.sign-up a {
+    padding: 5px;
+}
+
+nav a.is-active {
+    border-bottom: 3px solid rgb(64, 196, 255);
+}
+
+nav a.is-active.transparent {
+    border-bottom: 0;
+    color: rgb(64, 196, 255) !important;
+}
+
+nav {
+    margin-bottom: 0;
+}
+
+nav a {
+    padding: 0 1rem 23px 1rem;
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-size: medium;
+}
+
+.explore-beta span {
+    font-size: x-small;
+    font-style: italic;
+}
+
+.spacer {
+    display: inline;
+    font-size: medium;
+    padding: 0 1rem 23px 1rem;
+    color: white;
+}

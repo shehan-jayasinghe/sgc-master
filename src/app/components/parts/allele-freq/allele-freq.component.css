@@ -1,0 +1,25 @@
+
+
+div {
+    min-height: 17px;
+    cursor: pointer;
+}
+
+.chart {
+    display: flex;
+}
+
+.chart div {
+    min-width: 10px;
+    min-height: 15px;
+    border: 1px solid black;
+}
+
+@media (min-width: 0px) and (max-width: 800px) {
+
+    .chart div {
+        min-width: 5px;
+        min-height: 10px;
+    }
+
+}

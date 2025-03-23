@@ -1,0 +1,114 @@
+<div class="loading-message" *ngIf="loading && !error">
+    <mat-spinner color="primary"></mat-spinner>
+</div>
+
+<section *ngIf="error" class="message message-error">
+    {{ error }}
+</section>
+
+<mat-sidenav-container *ngIf="!error">
+    <mat-sidenav #sidenav
+                 mode="side"
+                 fixedInViewport="true"
+                 fixedTopGap="71"
+                 [opened]="!isSmallScreen()"
+                 disableClose="true">
+        <app-help-icon *ngIf="helpEnabled">Reset all filters or view the total counts.</app-help-icon>
+        <div class="side-toolbar">
+            <mat-icon class="material-icons" (click)="clearFilters()" matTooltip="Clear All Filters"
+                      matTooltipPosition="right">refresh
+            </mat-icon>
+            <div class="count">
+                <div class="number">
+                    {{ subtotal }}
+                </div>
+                <div>/</div>
+                <div class="number total-count">
+                    {{ total }}
+                </div>
+            </div>
+        </div>
+        <app-help-icon *ngIf="helpEnabled">Enable more charts or toggle other settings.</app-help-icon>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{cs.enabledCharts().length}} Charts
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="side-list">
+                <div mat-menu-item *ngFor="let c of cs.charts" (click)="toggleChart($event, c)">
+                    <mat-slide-toggle [checked]="c.enabled" (change)="c.enabled = $event.checked" (click)="$event.stopPropagation()">
+                        {{ c.name }}
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <div mat-menu-item (click)="toggleSql($event)">
+            <mat-slide-toggle [checked]="showSql" (change)="showSql=$event.checked" (click)="$event.stopPropagation()">
+                Show SQL
+            </mat-slide-toggle>
+        </div>
+        <div mat-menu-item (click)="toggleNullValues($event)">
+            <mat-slide-toggle [checked]="cs.showNullValues" (change)="updateNullValues($event)" (click)="$event.stopPropagation()">
+                Show NULL values
+            </mat-slide-toggle>
+        </div>
+        <button mat-menu-item (click)="openSummary()">Data Summary</button>
+        <button mat-menu-item (click)="downloadVariants()">Download Variants</button>
+        <button mat-menu-item (click)="toggleHelp()"><span *ngIf="!helpEnabled">Show</span><span *ngIf="helpEnabled">Hide</span> Help</button>
+
+    </mat-sidenav>
+    <div class="main">
+        <div class="message message-error search" *ngIf="searchError">
+            <mat-icon>error_outline</mat-icon>
+            {{ searchError }}. Please Try again
+        </div>
+        <div class="message message-error" *ngIf="error">
+            <mat-icon>error_outline</mat-icon>
+            {{ error }}
+        </div>
+
+        <div *ngIf="!error">
+            <div class="search-jumbo" *ngIf="!error">
+                <app-help-icon *ngIf="helpEnabled">Search by gene, region, RSID or position.</app-help-icon>
+
+                <app-search-bar-with-options
+                    [expandable]="false"
+                    [action]="addGeneOrRegion"
+                    example1="BRCA1"
+                    example2="TTN"></app-search-bar-with-options>
+            </div>
+            <div class="message message-warning">
+                <mat-icon>help_outline</mat-icon>
+                <div>Please treat beta release data with caution</div>
+            </div>
+            <div class="results">
+
+                <div *ngIf="showSql" class="generated-sql">
+                    <div>{{ sql }}</div>
+                    <div *ngIf="!sql">No Active filters</div>
+                </div>
+                <div class="message message-info" *ngIf="subtotal <=0 && !loading">
+                    <mat-icon>info_outline</mat-icon>
+                    No variants found for your query. Please widen your search.
+                </div>
+                <app-help-icon *ngIf="helpEnabled">The charts are interactive and allow you to slice and dice the data in whatever way you want. You can enable more charts from the side bar on the left.</app-help-icon>
+
+                <div class="charts" *ngIf="subtotal > 0 && !loading">
+                    <div class="chart" *ngFor="let c of cs.enabledCharts()">
+                        <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom"></app-mapd-avg-af-chart>
+                        <app-mapd-row-chart *ngIf="c.type === chartType.Row" [chart]="c"></app-mapd-row-chart>
+                        <app-mapd-pie-chart *ngIf="c.type === chartType.Pie" [chart]="c"></app-mapd-pie-chart>
+                    </div>
+                </div>
+                <div class="table" *ngIf="subtotal > 0">
+                    <app-help-icon *ngIf="helpEnabled">This table contains the filtered variants from the current query. Due to performance limitations, we are currently limited to 100 variants, but we hope to increase this in the future.</app-help-icon>
+                    <app-variants-table-paginated #table></app-variants-table-paginated>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</mat-sidenav-container>
+
+<mat-menu></mat-menu>
