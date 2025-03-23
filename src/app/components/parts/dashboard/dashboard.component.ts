@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
-import '@mapd/mapdc/dist/mapdc.js';
+import '@mapd/mapdc/dist/charting.js';
 import { Subscription } from 'rxjs/Subscription';
 import { constants } from '../../../app.constants';
 import { SearchBarService } from '../../../services/search-bar-service';
