@@ -9,7 +9,7 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/delay';
-import { TEST_KIDGEN } from "../data/kidgendata";
+import { TEST_KIDGEN } from "../mocks/kidgendata.mock";
 
 @Injectable()
 export class ClinapiService implements OnDestroy {
@@ -18,7 +18,7 @@ export class ClinapiService implements OnDestroy {
     changes = new Subject();
     subs: Subscription[] = [];
     internalSampleIDs = new Subject<string[]>();
-    
+
     private selectedExternalSamplesClinSource = new BehaviorSubject<string[]>([]);
     selectedExternalSamplesClin = this.selectedExternalSamplesClinSource.asObservable();
 
@@ -40,7 +40,7 @@ export class ClinapiService implements OnDestroy {
                     this.samples = this.samples.concat(family)
                 }
                 this.internalSampleIDs.next(this.samples);
-                
+
                 this.vss.getVariants(this.vss.lastQuery, this.samples.join());
             })
         );

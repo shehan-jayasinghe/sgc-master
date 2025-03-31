@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
-import '@mapd/mapdc/dist/mapdc.js';
+import '@mapd/mapdc/dist/charting.js';
 import { Subscription } from 'rxjs/Subscription';
 import { constants } from '../../../app.constants';
 import { SearchBarService } from '../../../services/search-bar-service';
@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                     ){
                         this.mapd.connect(this.cohortMapping).then((session) => {
                             let sess = this.cohortMapping.toUpperCase()
-                            return this.cf.create(session, sess);                       
+                            return this.cf.create(session, sess);
                         }).then(() => {
                             this.cf.updates.next();
                         }).catch((e) => this.errors.next(e));
@@ -117,7 +117,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                         if(this.permissions){
                             this.errors.next(constants.PERMISSION_ERROR_MESSAGE);
                         }
-                    }   
+                    }
                 }));
             }));
         }
@@ -163,7 +163,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.searchBarService.searchWithParams(obj).then((v: GenericAutocompleteResult<Gene | Region | Position | Rsid>) => {
             this.cf.mfs.clearFilters();
             dc.filterAll();
-            
+
             if (!v) {
                 return;
             }
